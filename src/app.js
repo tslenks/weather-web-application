@@ -1,4 +1,4 @@
-// This file is the entry point of the application
+// This file is the entry point of the application 
 const hbs = require('hbs') // handlebars specific for express
 const path = require('path') // core node module
 const express = require('express') // single function
