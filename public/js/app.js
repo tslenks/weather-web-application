@@ -1,6 +1,6 @@
 // Fetch API is a modern browser API, not a javascript API
 const getForecast = (address, callback) => {
-    const url = `http://localhost:3000/weather?address=${address}`;
+    const url = `/weather?address=${address}`;
     fetch(url).then((data) => {
         data.json().then((weather) => {
             if(weather.error){

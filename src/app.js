@@ -9,6 +9,9 @@ const htmlentities = require('html-entities')
 // no argument, config the server
 const app = express() 
 
+// port
+const port = process.env.PORT || 3000
+
 // Change the views of express for its default views folder
 app.set('views', path.join(__dirname, '../templates/views'))
 
@@ -113,4 +116,4 @@ app.get('*', (req, res) => {
 })
 
 // Set the port to see the application running through the browser
-app.listen(3000, ()=> {  console.log('the app is running') })
+app.listen(port, ()=> {  console.log(`the app is running in ${port} port`) })
