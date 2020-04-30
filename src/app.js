@@ -45,7 +45,7 @@ app.get('/about',(req, res) => {
     res.render('about', {
         title: 'About',
         description: 'This app is about Weather application for learning node js',
-        src: '/images/img1.jpg',
+        src: '/images/photo.jpg',
         author: 'Tslenks'
     })
 })
