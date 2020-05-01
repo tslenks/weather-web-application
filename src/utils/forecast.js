@@ -8,9 +8,9 @@ const forecast = (latitude, longitude, callback) => {
             const {message} = response.body
             callback(message);   
         } else {
-            const {current} = response.body    
+            const {current, daily} = response.body    
             const datetime = current.dt
-            callback(undefined, {current, datetime})            
+            callback(undefined, {current, datetime, daily})            
         }       
     })    
 }

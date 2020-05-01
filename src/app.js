@@ -4,7 +4,7 @@ const path = require('path') // core node module
 const express = require('express') // single function
 const geocode = require('./utils/geocode.js')
 const forecast = require('./utils/forecast.js')
-const htmlentities = require('html-entities')
+const converdate = require('./utils/convertdate.js')
 
 // no argument, config the server
 const app = express() 
@@ -89,12 +89,13 @@ app.get('/weather',(req, res) => {
             return res.send({ error :  error ? error : connexionError })
         }
         const {place_name, latitude, longitude} = geocodeResponse
-        forecast(latitude, longitude, (forecastError, {current, datetime}) => {
+        forecast(latitude, longitude, (forecastError, {daily, current, datetime}) => {
             if(forecastError) { return res.send({ error: forecastError}) }
             res.send({
                 place_name,
                 current,
-                datetime
+                datetime,
+                daily
             })
         })
     })

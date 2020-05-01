@@ -29,11 +29,59 @@ weatherForm.addEventListener('submit', (e) => {
         if(error) {
             return messageOne.textContent = error
         }
-        const {current, place_name : locationAddress} = data
-        const {temp: temperature, weather, datetime} = current
-        const {description} = weather[0]
-        const message = `For ${locationAddress}, it is ${temperature} °C actually, in general it is ${description}`
+        const {current, place_name : locationAddress, datetime:currentdate, daily} = data
+        
         messageOne.textContent = ''
-        messageTwo.textContent = message
+        messageTwo.innerHTML = renderCurrentMeteo(current, currentdate, locationAddress, daily)
     })
 })
+
+function renderCurrentMeteo(current, currentdate, locationAddress, daily) {
+    const {temp: temperature, weather, sunrise, sunset, clouds:cloudiness} = current
+    
+    let htmlrendering = '<div class="weather">'
+    htmlrendering = `<h4> ${locationAddress} </h4>`;
+    htmlrendering += templatingWeatherRender('current-weather', weather[0].description, currentdate, current.sunrise, current.sunset, cloudiness, temperature, current.visibility)
+
+    daily.forEach((item, index) => {
+        if(index < 1) {
+            htmlrendering += templatingWeatherRender('future-days', item.weather[0].description,item.dt, item.sunrise, item.sunset, item.clouds, item.temp.day, item.visibility)    
+        }        
+    })
+
+    htmlrendering += '</div>'
+
+    return htmlrendering
+}
+
+function  templatingWeatherRender(cssClass, description, date, sunrisetimestamp, sunsettimestamp, cloudiness, temperature, visibility) {
+    let html = `<div class="${cssClass}">`;
+    html += `<p>
+                ${current-weather ? 'Today' : 'For the '} ${convertTimestampToDate(date)} , the weather forecast will be: <br/> 
+                <span class="description"> In general it will be ${description}</span><br/>
+                <span class="sunrise"> <strong>Sunrise</strong> :  ${convertTimestampToDate(sunrisetimestamp)} </span><br/>
+                <span class="sunset"> <strong>Sunset</strong> : ${convertTimestampToDate(sunsettimestamp)} </span><br/>
+                <span class="clouds"> <strong>Percentage of clouds</strong> : ${cloudiness} </span><br/>
+                <span class="temperature"><strong>Current temperature</strong> : ${temperature} </span><br/>
+                <span class="visibility"><strong>Visibility(meter)</strong> : ${visibility || '-'} </span>
+            </p>`
+    html += '</div>'
+
+    return html
+}
+
+function convertTimestampToDate(timestampnumber, sep = "-", isMilliseconds = false) {
+    if(!isMilliseconds) {
+        timestampnumber *= 1000
+    }
+    
+    const date = new Date(timestampnumber);
+    const year = date.getFullYear()    
+    const month = ("0" + date.getMonth()).substr(-2)
+    const day = ("0" + date.getDate()).substr(-2)
+    const hour = ("0" + date.getHours()).substr(-2)
+    const minute = ("0" + date.getMinutes()).substr(-2)
+    const seconds = ("0" + date.getSeconds()).substr(-2)
+
+    return year + sep + month + sep + day + " " + hour + ":" + minute  + ":" + seconds
+}
