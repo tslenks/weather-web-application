@@ -57,7 +57,7 @@ function renderCurrentMeteo(current, currentdate, locationAddress, daily) {
 function  templatingWeatherRender(cssClass, description, date, sunrisetimestamp, sunsettimestamp, cloudiness, temperature, visibility) {
     let html = `<div class="${cssClass}">`;
     html += `<p>
-                ${current-weather ? 'Today' : 'For the '} ${convertTimestampToDate(date)} , the weather forecast will be: <br/> 
+                ${cssClass === 'current-weather' ? 'Today' : 'For the '} ${convertTimestampToDate(date)} , the weather forecast will be: <br/> 
                 <span class="description"> In general it will be ${description}</span><br/>
                 <span class="sunrise"> <strong>Sunrise</strong> :  ${convertTimestampToDate(sunrisetimestamp)} </span><br/>
                 <span class="sunset"> <strong>Sunset</strong> : ${convertTimestampToDate(sunsettimestamp)} </span><br/>
