@@ -44,7 +44,7 @@ app.get('', (req, res) => {
 app.get('/about',(req, res) => {
     res.render('about', {
         title: 'About',
-        description: 'This app is about Weather application for learning node js',
+        description: 'This app is about forecasting Weather application',
         src: '/images/photo.jpg',
         author: 'Tslenks'
     })
@@ -54,7 +54,7 @@ app.get('/about',(req, res) => {
 app.get('/help',(req, res) => {
     res.render('help', {
         title:'Help',
-        description: 'Weather 1.1 : This app is about Weather application for learning node js',    
+        description: 'Weather 1.1 : This app is about Weather application',    
         author: 'Tslenks'            
     })
 })
