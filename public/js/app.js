@@ -44,7 +44,7 @@ function renderCurrentMeteo(current, currentdate, locationAddress, daily) {
     htmlrendering += templatingWeatherRender('current-weather', weather[0].description, currentdate, current.sunrise, current.sunset, cloudiness, temperature, current.visibility)
 
     daily.forEach((item, index) => {
-        if(index < 1) {
+        if(index > 0 && index < 3) {
             htmlrendering += templatingWeatherRender('future-days', item.weather[0].description,item.dt, item.sunrise, item.sunset, item.clouds, item.temp.day, item.visibility)    
         }        
     })
@@ -58,12 +58,12 @@ function  templatingWeatherRender(cssClass, description, date, sunrisetimestamp,
     let html = `<div class="${cssClass}">`;
     html += `<p>
                 ${cssClass === 'current-weather' ? 'Today' : 'For the '} ${convertTimestampToDate(date)} , the weather forecast will be: <br/> 
-                <span class="description"> In general it will be ${description}</span><br/>
+                <span class="description"> In general it will be <strong><i>${description}</i></strong></span><br/>
                 <span class="sunrise"> <strong>Sunrise</strong> :  ${convertTimestampToDate(sunrisetimestamp)} </span><br/>
                 <span class="sunset"> <strong>Sunset</strong> : ${convertTimestampToDate(sunsettimestamp)} </span><br/>
                 <span class="clouds"> <strong>Percentage of clouds</strong> : ${cloudiness} </span><br/>
-                <span class="temperature"><strong>Current temperature</strong> : ${temperature} </span><br/>
-                <span class="visibility"><strong>Visibility(meter)</strong> : ${visibility || '-'} </span>
+                <span class="temperature"><strong>Temperature</strong> : ${temperature} </span><br/>
+                <span class="visibility"><strong>Visibility (meter)</strong> : ${visibility || '-'} </span>
             </p>`
     html += '</div>'
 
@@ -77,7 +77,8 @@ function convertTimestampToDate(timestampnumber, sep = "-", isMilliseconds = fal
     
     const date = new Date(timestampnumber);
     const year = date.getFullYear()    
-    const month = ("0" + date.getMonth()).substr(-2)
+    const convertedMonth = parseInt(date.getMonth() + 1)
+    const month = ("0" + convertedMonth.toString()).substr(-2)
     const day = ("0" + date.getDate()).substr(-2)
     const hour = ("0" + date.getHours()).substr(-2)
     const minute = ("0" + date.getMinutes()).substr(-2)
