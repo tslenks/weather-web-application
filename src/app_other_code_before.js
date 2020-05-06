@@ -5,8 +5,8 @@
         name:'Andry',
         age: 34
     })
-})*/
+}) */
 
-/*app.get('/about',(req, res) => {
+/* app.get('/about',(req, res) => {
     res.send('<h1>This is the about page</h1>')
-})*/
+}) */
